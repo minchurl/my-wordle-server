@@ -1,4 +1,3 @@
-use std::io;
 use std::sync::RwLock;
 use my_wordle_server::is_valid_word;
 
