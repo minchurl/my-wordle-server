@@ -31,15 +31,14 @@ async fn set_hidden_word(new_word: &str, hidden_word: &State<RwLock<String>>) ->
 #[get("/score_word/<word>")]
 async fn score_word(word: &str, hidden_word: &State<RwLock<String>>) -> String {
     let hidden_word = hidden_word.read().unwrap();
-    println!("{}", hidden_word);
-    let res = hidden_word
+    let res = word
         .chars()
-        .zip(word.chars())
+        .zip(hidden_word.chars())
         .map(|(x, y)| {
             if x == y {
                 return 'G';
             }
-            else if word.chars().any(|z| z == x) {
+            else if hidden_word.chars().any(|z| z == x) {
                 return 'Y';
             }
             else {
@@ -49,7 +48,6 @@ async fn score_word(word: &str, hidden_word: &State<RwLock<String>>) -> String {
         .collect::<String>()
     ;
     
-    // println!("{}", res);
     res
 }
 
